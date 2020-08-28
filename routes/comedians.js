@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require ('../db/config');
-const { index, show, create } = require('../db/queries');
+const { index, show, create, update, destroy } = require('../db/queries');
 
 const router = express.Router();
 
@@ -33,5 +33,23 @@ router.post('/', (req, res) => {
         })
         .catch(err => res.status(500).end())
 })
+
+//update route
+router.patch('/:id', (req, res) => {
+    db.run(update, [req.params.id])
+        .then(result => {
+            const comedians = result.rows[0]
+            res.json({comedians})
+        })
+        .catch(err => res.status(500).end())
+})
+
+// delete route
+router.delete('/:id', (req, res) => {
+    db.run(destroy, [req.params.id])
+        .then(res.status(204))
+        .catch(err => res.status(500).end())
+})
+
 
 module.exports = router;

@@ -21,11 +21,17 @@ function appendLists(data){
 let newLi;
 function appendList(data){
     newLi = document.createElement('li');
-    newLi.textContent = `Name: ${data.name} | Age: ${data.age}   |  Status: ${data.status}`
+    const fullList = formatList(data, newLi)
+    oldList.append(fullList);
 
-    oldList.append(newLi)
+    //if you just want to post old and create new, you can use below:
+
+    // newLi.textContent = `Name: ${data.name} | Age: ${data.age}   |  Status: ${data.status}`
+    // oldList.append(newLi)
+
+    //BUT YOU NEED TO USE FORMATLIST FUNCTION TO UPDATE AND DELETE!!!!!
 };
-//ends here
+
 
 //create new data and add it on the list
 function submitNew(e){
@@ -48,4 +54,46 @@ function submitNew(e){
         .then(appendList)
         .catch(console.warn)
 };
-//ends here
+
+
+
+//update 
+function updateData(id, li){
+    const options = { 
+        method: 'PATCH',
+    };
+    fetch(`http://localhost:3000/comedians/${id}`, options)
+        .then(r => r.json())
+        .then(data => {
+            const {comedians} = data
+            formatList(comedians, li)
+        })
+        .catch(console.warn)
+}
+
+
+//delete
+function deleteData(id, li){
+    console.log('deleting', id)
+    const options = { 
+        method: 'DELETE',
+    };
+    fetch(`http://localhost:3000/comedians/${id}`, options)
+        .then(li.remove())
+        .catch(console.warn)
+}
+
+
+//overall: To update, delete!
+function formatList(data, li){
+    const delBtn = document.createElement('button');
+    const uptBtn = document.createElement('button');
+    delBtn.textContent= 'Delete'
+    uptBtn.textContent= 'Add 1'
+    delBtn.onclick = () => deleteData(data.id, li)
+    uptBtn.onclick = () => updateData(data.id, li)
+    li.textContent = `Name: ${data.name} || Age: ${data.age} || Status: ${data.status}`
+    li.append(delBtn)
+    li.append(uptBtn)
+    return li
+}
