@@ -1,12 +1,14 @@
-DROP TABLE IF EXISTS shows;
+DROP TABLE IF EXISTS celebs;
 
-CREATE TABLE shows (
+CREATE TABLE comedians (
     id serial PRIMARY KEY,
-    title varchar(255) NOT NULL,
-    genre varchar(255) NOT NULL,
-    episodes int NOT NULL
+    name varchar(50) NOT NULL,
+    age INT,
+    status varchar(50) NOT NULL
 );
 
-INSERT INTO shows (title, genre, episodes)
-VALUES ('friends', 'comedy', 500), ('derry girls', 'comedy', 12), ('peaky blinders', 'crime, drama', 30);
+INSERT INTO comedians (name, age, status)
+VALUES ('Trevor Noah', 36, 'single'), 
+       ('Hasan Minhaj', 35, 'married'), 
+       ('Jo Koy', 40 , 'single');
 
