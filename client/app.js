@@ -25,7 +25,6 @@ function appendList(data){
     oldList.append(fullList);
 
     //if you just want to post old and create new, you can use below:
-
     // newLi.textContent = `Name: ${data.name} | Age: ${data.age}   |  Status: ${data.status}`
     // oldList.append(newLi)
 
